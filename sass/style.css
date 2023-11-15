@@ -1,0 +1,40 @@
+table {
+  text-align: center;
+}
+
+thead tr th {
+  background-color: #555;
+}
+
+td.checked {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+td.Low {
+  padding: auto, 5px;
+  background-color: limegreen;
+  margin: 25%;
+}
+
+td.Normal {
+  padding: auto, 5px;
+  background-color: dodgerblue;
+  margin: 25%;
+}
+
+td.High {
+  padding: auto, 5px;
+  background-color: orangered;
+  margin: 25%;
+}
+
+.btn-close {
+  background-color: red;
+  opacity: 1;
+  padding: auto;
+}
+
+#btn-add {
+  background-color: green;
+}/*# sourceMappingURL=style.css.map */
