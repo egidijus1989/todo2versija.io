@@ -4,7 +4,6 @@ savePriority.addEventListener('click', ()=>{
     let select1 = document.querySelector('.form-select-1');
     pasirinktasPrioritetas.textContent = select1.value;
     pasirinktasPrioritetas.classList.add('Low');
-    console.log(pasirinktasPrioritetas.textContent);
     if (pasirinktasPrioritetas.textContent == "Low"){
         pasirinktasPrioritetas.classList = "Low";
     }
@@ -14,7 +13,6 @@ savePriority.addEventListener('click', ()=>{
     else if (pasirinktasPrioritetas.textContent == "High"){
         pasirinktasPrioritetas.classList = "High";
     }
-    
 })
 
 // Function to retrieve tasks from localStorage and display them
@@ -83,7 +81,8 @@ function displayTasks() {
     cell4.textContent = task.dueDate;
 
     //cell5 aprasymas//////////////////////////////////////////////////////
-      cell5.ondblclick = insertStatus;
+    cell5.textContent = task.status;
+    cell5.ondblclick = insertStatus;
   function insertStatus(){
     status1 = parseInt(prompt("Progress of work in percents", "0"), 10);
     if (status1 >= 0 && status1 <= 100) {
@@ -108,6 +107,7 @@ function displayTasks() {
     }
   }
     //cell6 aprasymas//////////////////////////////////////////////////////
+    
     let progress = document.createElement('div');
     progress.classList = 'progress';
     progress.role = "progressbar";
@@ -117,8 +117,8 @@ function displayTasks() {
     progress.setAttribute('aria-valuemax', "100");
     let progressBar = document.createElement('div');
     progressBar.classList = "progress-bar bg-success";
-    progressBar.style.width = `${0}%`;
-    progressBar.textContent = `${0} %`;
+    progressBar.style.width = `${task.progress}%`;
+    progressBar.textContent = `${task.progress} %`;
     progress.appendChild(progressBar);
     cell6.appendChild(progress);
 
@@ -149,12 +149,11 @@ function displayTasks() {
     del.classList = "btn-close";
     del.type = "button";
     del.setAttribute('aria-label', "Close");
-    cell8.addEventListener('click', ()=>{
-      row.remove();
-    })
+    cell8.onclick = function() {
+      deleteTask(index);
+    };
     cell8.appendChild(del);
     
-
     //updatines funkcijos//////////////////////////////////////////////////////
   });
 }
@@ -183,8 +182,8 @@ function addTask() {
       name: taskInput,
       priority: priorityInput,
       dueDate: dateInput,
-      status: '',
-      progress: '',
+      status: 'New',
+      progress: 0,
       modify: ''
     };
     tasks.push(newTask);
@@ -202,22 +201,51 @@ function addTask() {
   }
 }
 
-// Function to update a task in the list
-function updateTask(index) {
+// Function to update a task in the list//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// function updateStatus(index) {
+//   var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  
+//   var newStatus;
+//   var newProgress = "";
+//   let status1 = parseInt(prompt("Progress of work in percents", "0"), 10);
+//     if (status1 >= 0 && status1 <= 100) {
+//         if (status1 == 0) {
+//             cell5.newStatus = `New`;
+//             progressBar.style.width = `${status1}%`;
+//             progressBar.textContent = `${status1} %`;
+//         }
+//         else if (status1 >=100){
+//             cell5.newStatus = `Complete`;
+//             progressBar.style.width = `${status1}%`;
+//             progressBar.textContent = `${status1} %`;
+//         }
+//         else {
+//             cell5.newStatus = `In Progress`;
+//             progressBar.style.width = `${status1}%`;
+//             progressBar.textContent = `${status1} %`;
+//         }   
+//     }
+//     else {
+//         alert('Progress value need to be between 0 and 100 %')
+//     }
+
+//   if (newStatus !== null && newStatus !== '') {
+//     tasks[index].status = newStatus;
+//     tasks[index].progress = newProgress;
+
+//     localStorage.setItem('tasks', JSON.stringify(tasks));
+//     displayTasks();
+//   }
+// }
+
+//function to delete a task in the list
+function deleteTask(index) {
   var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
   
-  var newName = prompt('Enter new task name:');
-  var newPriority = prompt('Enter new priority:');
-  var newDueDate = prompt('Enter new due date:');
+  tasks.splice(index, 1);
 
-  if (newName !== null && newName !== '') {
-    tasks[index].name = newName;
-    tasks[index].priority = newPriority;
-    tasks[index].dueDate = newDueDate;
-
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-    displayTasks();
-  }
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  displayTasks();
 }
 
 // Display tasks when the page loads
