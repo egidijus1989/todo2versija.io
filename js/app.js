@@ -74,14 +74,10 @@ function displayTasks() {
     else if (cell3.textContent == "High"){
       cell3.classList = "High";
     }
-    cell3.ondblclick = function() {
-      updatePriority();
-    }
     cell3.addEventListener('dblclick', ()=>{
       pasirinktasPrioritetas = cell3
       const myModal = new bootstrap.Modal('#exampleModal');
       myModal.show();
-      saveData();/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   })
     //cell4 aprasymas//////////////////////////////////////////////////////
     cell4.textContent = task.dueDate;
@@ -162,6 +158,7 @@ function displayTasks() {
     //updatines funkcijos//////////////////////////////////////////////////////
   });
 }
+
 
 // Function to add a new task to the list
 function addTask() {
